@@ -1,13 +1,14 @@
-// swift-tools-version:5.7
+// swift-tools-version:6.0
 import PackageDescription
 
 let package = Package(
     name: "Nuke",
     platforms: [
-        .iOS(.v13),
-        .tvOS(.v13),
-        .macOS(.v10_15),
-        .watchOS(.v6)
+        .iOS(.v16),
+        .tvOS(.v16),
+        .macOS(.v13),
+        .watchOS(.v9),
+        .visionOS(.v1)
     ],
     products: [
         .library(name: "Nuke", targets: ["Nuke"]),
@@ -17,8 +18,9 @@ let package = Package(
     ],
     targets: [
         .target(name: "Nuke"),
-        .target(name: "NukeUI", dependencies: ["Nuke"]),
-        .target(name: "NukeVideo", dependencies: ["Nuke"]),
+        .target(name: "NukeUI", dependencies: ["Nuke", "NukeExtensions"]),
+        .target(name: "NukeVideo", dependencies: ["Nuke", "NukeExtensions"]),
         .target(name: "NukeExtensions", dependencies: ["Nuke"])
-    ]
+    ],
+    swiftLanguageModes: [.v5]
 )
