@@ -140,8 +140,8 @@ public final class ImageTask: Hashable, CustomStringConvertible, @unchecked Send
     private weak var pipeline: ImagePipeline?
 
     // State synchronized on `pipeline.queue`.
-    var _task: Task<ImageResponse, Error>!
-    var _continuation: UnsafeContinuation<ImageResponse, Error>?
+    var _task: Task<ImageResponse, any Error>!
+    var _continuation: UnsafeContinuation<ImageResponse, any Error>?
     var _state: State = .running
     private var _events: PassthroughSubject<Event, Never>?
 
@@ -249,7 +249,7 @@ public final class ImageTask: Hashable, CustomStringConvertible, @unchecked Send
             _events?.send(completion: .finished)
             _continuation?.resume(throwing: CancellationError())
         case .finished(let result):
-            let result = result.mapError { $0 as Error }
+            let result = result.mapError { $0 as any Error }
             _events?.send(completion: .finished)
             _continuation?.resume(with: result)
         default:

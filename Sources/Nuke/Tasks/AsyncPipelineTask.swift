@@ -32,7 +32,7 @@ extension ImageTask: ImageTaskSubscribers {
 extension AsyncPipelineTask: ImageTaskSubscribers {
     var imageTasks: [ImageTask] {
         subscribers.flatMap { subscribers -> [ImageTask] in
-            (subscribers as? ImageTaskSubscribers)?.imageTasks ?? []
+            (subscribers as? (any ImageTaskSubscribers))?.imageTasks ?? []
         }
     }
 }

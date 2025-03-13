@@ -21,12 +21,12 @@ public struct LazyImage<Content: View>: View {
     @StateObject private var viewModel = FetchImage()
 
     private var context: LazyImageContext?
-    private var makeContent: ((LazyImageState) -> Content)?
+    private var makeContent: ((any LazyImageState) -> Content)?
     private var transaction: Transaction
     private var pipeline: ImagePipeline = .shared
     private var onStart: ((ImageTask) -> Void)?
     private var onDisappearBehavior: DisappearBehavior? = .cancel
-    private var onCompletion: ((Result<ImageResponse, Error>) -> Void)?
+    private var onCompletion: ((Result<ImageResponse, any Error>) -> Void)?
 
     // MARK: Initializers
 
@@ -52,7 +52,7 @@ public struct LazyImage<Content: View>: View {
     /// See also ``init(request:transaction:content:)``
     public init(url: URL?,
                 transaction: Transaction = Transaction(animation: nil),
-                @ViewBuilder content: @escaping (LazyImageState) -> Content) {
+                @ViewBuilder content: @escaping (any LazyImageState) -> Content) {
         self.init(request: url.map { ImageRequest(url: $0) }, transaction: transaction, content: content)
     }
 
@@ -75,7 +75,7 @@ public struct LazyImage<Content: View>: View {
     /// ```
     public init(request: ImageRequest?,
                 transaction: Transaction = Transaction(animation: nil),
-                @ViewBuilder content: @escaping (LazyImageState) -> Content) {
+                @ViewBuilder content: @escaping (any LazyImageState) -> Content) {
         self.context = request.map { LazyImageContext(request: $0) }
         self.transaction = transaction
         self.makeContent = content
@@ -120,7 +120,7 @@ public struct LazyImage<Content: View>: View {
     }
 
     /// Gets called when the current request is completed.
-    public func onCompletion(_ closure: @escaping (Result<ImageResponse, Error>) -> Void) -> Self {
+    public func onCompletion(_ closure: @escaping (Result<ImageResponse, any Error>) -> Void) -> Self {
         map { $0.onCompletion = closure }
     }
 
@@ -148,7 +148,7 @@ public struct LazyImage<Content: View>: View {
     }
 
     @ViewBuilder
-    private func makeDefaultContent(for state: LazyImageState) -> some View {
+    private func makeDefaultContent(for state: any LazyImageState) -> some View {
         if let image = state.image {
             image
         } else {

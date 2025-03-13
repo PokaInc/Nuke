@@ -178,7 +178,7 @@ public struct ImageLoadingOptions {
 #if os(iOS) || os(tvOS) || os(visionOS)
         enum Style { // internal representation
             case fadeIn(parameters: Parameters)
-            case custom((ImageDisplayingView, UIImage) -> Void)
+            case custom((any ImageDisplayingView, UIImage) -> Void)
         }
 
         struct Parameters { // internal representation
@@ -193,7 +193,7 @@ public struct ImageLoadingOptions {
         }
 
         /// Custom transition. Only runs when the image was not found in memory cache.
-        public static func custom(_ closure: @escaping (ImageDisplayingView, UIImage) -> Void) -> Transition {
+        public static func custom(_ closure: @escaping (any ImageDisplayingView, UIImage) -> Void) -> Transition {
             Transition(style: .custom(closure))
         }
 #elseif os(macOS)

@@ -10,7 +10,7 @@ import Nuke
 @MainActor
 public final class FetchImage: ObservableObject, Identifiable {
     /// Returns the current fetch result.
-    @Published public private(set) var result: Result<ImageResponse, Error>?
+    @Published public private(set) var result: Result<ImageResponse, any Error>?
 
     /// Returns the fetched image.
     public var image: Image? {
@@ -78,7 +78,7 @@ public final class FetchImage: ObservableObject, Identifiable {
     public var onStart: ((ImageTask) -> Void)?
 
     /// Gets called when the current request is completed.
-    public var onCompletion: ((Result<ImageResponse, Error>) -> Void)?
+    public var onCompletion: ((Result<ImageResponse, any Error>) -> Void)?
 
     private var imageTask: ImageTask?
     private var lastResponse: ImageResponse?
@@ -158,7 +158,7 @@ public final class FetchImage: ObservableObject, Identifiable {
         self.imageContainer = preview.container
     }
 
-    private func handle(result: Result<ImageResponse, Error>) {
+    private func handle(result: Result<ImageResponse, any Error>) {
         isLoading = false
         imageTask = nil
 

@@ -90,7 +90,7 @@ extension TVPosterView: Nuke_ImageDisplaying {
 @discardableResult public func loadImage(
     with url: URL?,
     options: ImageLoadingOptions? = nil,
-    into view: ImageDisplayingView,
+    into view: any ImageDisplayingView,
     completion: @escaping (_ result: Result<ImageResponse, ImagePipeline.Error>) -> Void
 ) -> ImageTask? {
     loadImage(with: url, options: options, into: view, progress: nil, completion: completion)
@@ -123,7 +123,7 @@ extension TVPosterView: Nuke_ImageDisplaying {
 @discardableResult public func loadImage(
     with url: URL?,
     options: ImageLoadingOptions? = nil,
-    into view: ImageDisplayingView,
+    into view: any ImageDisplayingView,
     progress: ((_ response: ImageResponse?, _ completed: Int64, _ total: Int64) -> Void)? = nil,
     completion: ((_ result: Result<ImageResponse, ImagePipeline.Error>) -> Void)? = nil
 ) -> ImageTask? {
@@ -138,7 +138,7 @@ extension TVPosterView: Nuke_ImageDisplaying {
 @discardableResult public func loadImage(
     with request: ImageRequest?,
     options: ImageLoadingOptions? = nil,
-    into view: ImageDisplayingView,
+    into view: any ImageDisplayingView,
     completion: @escaping (_ result: Result<ImageResponse, ImagePipeline.Error>) -> Void
 ) -> ImageTask? {
     loadImage(with: request, options: options ?? .shared, into: view, progress: nil, completion: completion)
@@ -171,7 +171,7 @@ extension TVPosterView: Nuke_ImageDisplaying {
 @discardableResult public func loadImage(
     with request: ImageRequest?,
     options: ImageLoadingOptions? = nil,
-    into view: ImageDisplayingView,
+    into view: any ImageDisplayingView,
     progress: ((_ response: ImageResponse?, _ completed: Int64, _ total: Int64) -> Void)? = nil,
     completion: ((_ result: Result<ImageResponse, ImagePipeline.Error>) -> Void)? = nil
 ) -> ImageTask? {
@@ -181,7 +181,7 @@ extension TVPosterView: Nuke_ImageDisplaying {
 
 /// Cancels an outstanding request associated with the view.
 @MainActor
-public func cancelRequest(for view: ImageDisplayingView) {
+public func cancelRequest(for view: any ImageDisplayingView) {
     ImageViewController.controller(for: view).cancelOutstandingTask()
 }
 
@@ -194,7 +194,7 @@ public func cancelRequest(for view: ImageDisplayingView) {
 /// making it public wouldn't expose any additional functionality to the users.
 @MainActor
 private final class ImageViewController {
-    private weak var imageView: ImageDisplayingView?
+    private weak var imageView: (any ImageDisplayingView)?
     private var task: ImageTask?
     private var options: ImageLoadingOptions
 
@@ -209,7 +209,7 @@ private final class ImageViewController {
         task?.cancel()
     }
 
-    init(view: /* weak */ ImageDisplayingView) {
+    init(view: /* weak */ any ImageDisplayingView) {
         self.imageView = view
         self.options = .shared
     }
@@ -224,7 +224,7 @@ private final class ImageViewController {
 #endif
 
     // Lazily create a controller for a given view and associate it with a view.
-    static func controller(for view: ImageDisplayingView) -> ImageViewController {
+    static func controller(for view: any ImageDisplayingView) -> ImageViewController {
         if let controller = objc_getAssociatedObject(view, controllerAK) as? ImageViewController {
             return controller
         }

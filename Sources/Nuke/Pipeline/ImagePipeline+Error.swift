@@ -10,7 +10,7 @@ extension ImagePipeline {
         /// Returned if data not cached and ``ImageRequest/Options-swift.struct/returnCacheDataDontLoad`` option is specified.
         case dataMissingInCache
         /// Data loader failed to load image data with a wrapped error.
-        case dataLoadingFailed(error: Swift.Error)
+        case dataLoadingFailed(error: any Swift.Error)
         /// Data loader returned empty data.
         case dataIsEmpty
         /// No decoder registered for the given data.
@@ -19,9 +19,9 @@ extension ImagePipeline {
         /// By default, the pipeline uses ``ImageDecoders/Default`` as a catch-all.
         case decoderNotRegistered(context: ImageDecodingContext)
         /// Decoder failed to produce a final image.
-        case decodingFailed(decoder: any ImageDecoding, context: ImageDecodingContext, error: Swift.Error)
+        case decodingFailed(decoder: any ImageDecoding, context: ImageDecodingContext, error: any Swift.Error)
         /// Processor failed to produce a final image.
-        case processingFailed(processor: any ImageProcessing, context: ImageProcessingContext, error: Swift.Error)
+        case processingFailed(processor: any ImageProcessing, context: ImageProcessingContext, error: any Swift.Error)
         /// Load image method was called with no image request.
         case imageRequestMissing
         /// Image pipeline is invalidated and no requests can be made.
@@ -31,7 +31,7 @@ extension ImagePipeline {
 
 extension ImagePipeline.Error {
     /// Returns underlying data loading error.
-    public var dataLoadingError: Swift.Error? {
+    public var dataLoadingError: (any Swift.Error)? {
         switch self {
         case .dataLoadingFailed(let error):
             return error

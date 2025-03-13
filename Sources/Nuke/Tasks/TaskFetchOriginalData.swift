@@ -137,7 +137,7 @@ final class TaskFetchOriginalData: AsyncPipelineTask<(Data, URLResponse?)>, @unc
         send(value: (data, response))
     }
 
-    private func dataTaskDidFinish(error: Swift.Error?) {
+    private func dataTaskDidFinish(error: (any Swift.Error)?) {
         if let error {
             tryToSaveResumableData()
             send(error: .dataLoadingFailed(error: error))

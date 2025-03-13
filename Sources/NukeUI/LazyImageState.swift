@@ -11,7 +11,7 @@ import Combine
 @MainActor
 public protocol LazyImageState {
     /// Returns the current fetch result.
-    var result: Result<ImageResponse, Error>? { get }
+    var result: Result<ImageResponse, any Error>? { get }
 
     /// Returns the fetched image.
     ///
@@ -29,7 +29,7 @@ public protocol LazyImageState {
 
 extension LazyImageState {
     /// Returns the current error.
-    public var error: Error? {
+    public var error: (any Error)? {
         if case .failure(let error) = result {
             return error
         }

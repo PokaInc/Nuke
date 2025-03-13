@@ -156,10 +156,10 @@ public final class LazyImageView: _PlatformBaseView {
     public var onSuccess: ((ImageResponse) -> Void)?
 
     /// Gets called when the requests fails.
-    public var onFailure: ((Error) -> Void)?
+    public var onFailure: ((any Error) -> Void)?
 
     /// Gets called when the request is completed.
-    public var onCompletion: ((Result<ImageResponse, Error>) -> Void)?
+    public var onCompletion: ((Result<ImageResponse, any Error>) -> Void)?
 
     // MARK: Other Options
 
@@ -319,7 +319,7 @@ public final class LazyImageView: _PlatformBaseView {
         display(preview.container, isFromMemory: false)
     }
 
-    private func handle(result: Result<ImageResponse, Error>, isSync: Bool) {
+    private func handle(result: Result<ImageResponse, any Error>, isSync: Bool) {
         resetIfNeeded()
         setPlaceholderViewHidden(true)
 

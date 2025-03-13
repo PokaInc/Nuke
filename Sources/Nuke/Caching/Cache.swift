@@ -40,7 +40,7 @@ final class Cache<Key: Hashable, Value>: @unchecked Sendable {
     private var map = [Key: LinkedList<Entry>.Node]()
     private let list = LinkedList<Entry>()
     private let lock: os_unfair_lock_t
-    private let memoryPressure: DispatchSourceMemoryPressure
+    private let memoryPressure: any DispatchSourceMemoryPressure
     private var notificationObserver: AnyObject?
 
     init(costLimit: Int, countLimit: Int) {
