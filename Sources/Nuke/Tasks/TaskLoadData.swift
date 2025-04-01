@@ -3,6 +3,7 @@
 // Copyright (c) 2015-2024 Alexander Grebenyuk (github.com/kean).
 
 import Foundation
+import UIKit
 
 /// Wrapper for tasks created by `loadData` calls.
 final class TaskLoadData: AsyncPipelineTask<ImageResponse>, @unchecked Sendable {
