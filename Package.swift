@@ -1,4 +1,4 @@
-// swift-tools-version:6.0
+// swift-tools-version:6.2
 import PackageDescription
 
 let swiftSettings: [SwiftSetting] = [
@@ -7,19 +7,6 @@ let swiftSettings: [SwiftSetting] = [
     .enableUpcomingFeature("MemberImportVisibility"),
     .enableUpcomingFeature("AccessLevelOnImport"),
     .enableUpcomingFeature("NonescapableTypes"),
-    .enableUpcomingFeature("GlobalActorIsolatedTypesUsability"),
-    .enableUpcomingFeature("DynamicActorIsolation"),
-    .enableUpcomingFeature("InferSendableFromCaptures"),
-    .enableUpcomingFeature("RegionBasedIsolation"),
-    .enableUpcomingFeature("GlobalConcurrency"),
-    .enableUpcomingFeature("IsolatedDefaultValues"),
-    .enableUpcomingFeature("DisableOutwardActorInference"),
-    .enableUpcomingFeature("ImportObjcForwardDeclarations"),
-    .enableUpcomingFeature("DeprecateApplicationMain"),
-    .enableUpcomingFeature("BareSlashRegexLiterals"),
-    .enableUpcomingFeature("ImplicitOpenExistentials"),
-    .enableUpcomingFeature("ForwardTrailingClosures"),
-    .enableUpcomingFeature("ConciseMagicFile"),
     .enableUpcomingFeature("ExistentialAny")
 ]
 
@@ -28,9 +15,9 @@ let package = Package(
     platforms: [
         .iOS(.v16),
         .tvOS(.v16),
-        .macOS(.v13),
-        .watchOS(.v9),
-        .visionOS(.v1)
+        .macOS(.v14),
+        .watchOS(.v10),
+        .visionOS(.v2)
     ],
     products: [
         .library(name: "Nuke", targets: ["Nuke"]),
@@ -44,5 +31,5 @@ let package = Package(
         .target(name: "NukeVideo", dependencies: ["Nuke", "NukeExtensions"], swiftSettings: swiftSettings),
         .target(name: "NukeExtensions", dependencies: ["Nuke"], swiftSettings: swiftSettings)
     ],
-    swiftLanguageModes: [.v5]
+    swiftLanguageModes: [.v6]
 )
